@@ -102,9 +102,6 @@ function Users() {
               }}> Update</button>
               </div>
           );
-          
-          //;
-          // Sahi: idt we need that semi-colon^^
         })}
       
       </div>

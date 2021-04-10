@@ -27,7 +27,7 @@ app.get("/api/users/get", (require, response) => {
 app.get("/api/users/getSelected/:first_name", (require, response) => {
   const first_name = require.params.first_name;
 
-  const sqlSelect = "SELECT * FROM users WHERE `first_name`= ?";
+  const sqlSelect = "SELECT * FROM users WHERE `first_name` LIKE ?";
   db.query(sqlSelect, first_name, (err, result) => {
       response.send(result);
 
