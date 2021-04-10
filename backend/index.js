@@ -71,6 +71,73 @@ app.put("/api/users/update/", (require, response) => {
 });
 
 // recipes endpoints
+app.get("/api/recipes/get", (require, response) => {
+  const sqlSelect = "SELECT * FROM recipes";
+  db.query(sqlSelect, (err, result) => {
+      response.send(result);
+  });
+});
+
+app.get("/api/recipes/getSelected/:recipe_name", (require, response) => {
+  const recipe_name = require.params.recipe_name;
+
+  const sqlSelect = "SELECT * FROM recipes WHERE `recipe_name`= ?";
+  db.query(sqlSelect, recipe_name, (err, result) => {
+      response.send(result);
+
+      if (err) 
+        console.log(err);
+  });
+});
+
+// might need to add other attributes
+/*
+app.post("/api/recipes/insert", (require, response) => {
+  // need to tie to a user (user_id)
+  const rating = require.body.rating;
+  const prep_time_minutes = require.body.prep_time_minutes;
+  const serving_size = require.body.serving_size;
+  const recipe_description = require.body.recipe_description;
+  const recipe_name = require.body.recipe_name;
+
+  const sqlInsert = "INSERT INTO `recipes` (`rating`, `prep_time_minutes`, `serving_size`, `recipe_description`, `recipe_name`) VALUES (?,?,?,?,?)";
+  db.query(sqlInsert, [rating, prep_time_minutes, serving_size, recipe_description, recipe_name], (err, result) => {
+      if (err)
+        console.log(err);
+  })
+});
+*/
+
+// figure out based on what are we going to delete
+/*
+app.delete("/api/recipes/delete/:", (require, response) => {
+  const email = require.params.email;
+
+  const sqlDelete = "DELETE FROM `recipes` WHERE `email`= ?";
+  db.query(sqlDelete, email, (err, result) => {
+      if (err) 
+        console.log(err);
+  })
+});
+*/
+
+/*
+app.put("/api/recipes/update/", (require, response) => {
+  // need to tie to a user (user_id)
+  const rating = require.body.rating;
+  const prep_time_minutes = require.body.prep_time_minutes;
+  const serving_size = require.body.serving_size;
+  const recipe_description = require.body.recipe_description;
+  const recipe_name = require.body.recipe_name;
+
+  // figure out based on what are we going to update
+  const sqlUpdate = "UPDATE `recipes` SET `rating` = ?, `prep_time_minutes` = ?, `serving_size` = ?, `recipe_description` = ?, `recipe_name` = ? WHERE `email`= ?";
+  db.query(sqlUpdate, [rating, prep_time_minutes, serving_size, recipe_description, recipe_name], (err, result) => {
+      if (err) 
+        console.log(err);
+  })
+});
+*/
 
 // ingredients endpoints
 
