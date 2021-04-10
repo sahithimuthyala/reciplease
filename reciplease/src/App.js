@@ -10,7 +10,7 @@ function App() {
 
       <div className="form">
         <h3> Homepage:</h3>
-        <button onClick={showUsers()}> Users</button>
+        <button> Users</button>
         <br/>
         <br/>
         <button> Recipes</button>

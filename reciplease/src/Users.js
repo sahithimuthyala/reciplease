@@ -15,6 +15,8 @@ function Users() {
 
     useEffect(() => {
       Axios.get('http://localhost:3002/api/users/get').then((response) => {
+        console.log('asdf', response)
+        console.log(userList)
         setUsersList(response.data)
       })
     })
@@ -46,7 +48,7 @@ function Users() {
           lastName: newLastName,
           email: email,
         });
-        setNewFirstName(""),
+        setNewFirstName("")
         setNewLastName("")
     };
 
@@ -54,10 +56,10 @@ function Users() {
         Axios.get(`http://localhost:3002/api/users/getSelected/${searchFirstName}`).then((response) => {
         setUsersList(response.data)
       })
-    },[];
+    };
   
     return (
-      <div className="App">
+      <div className="Users">
         <h1> Users</h1>
   
         <div className="form">
@@ -83,7 +85,6 @@ function Users() {
           <button onClick={() => {
               searchUser()
           }}> Populate</button>
-
           {userList.map((val) => {
             return (
               <div className = "card">
@@ -111,5 +112,5 @@ function Users() {
     );
   }
   
-  export default App;
+  export default Users;
   
