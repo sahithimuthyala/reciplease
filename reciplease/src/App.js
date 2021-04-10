@@ -10,9 +10,7 @@ function App() {
 
       <div className="form">
         <h3> Homepage:</h3>
-        <a href='localhost:3000/users'>
-          <button> Users</button>
-        </a>
+        <button onClick={showUsers()}> Users</button>
         <br/>
         <br/>
         <button> Recipes</button>

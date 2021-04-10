@@ -2,7 +2,7 @@ import './App.css';
 import React, {useState, useEffect} from "react";
 import Axios from 'axios';
 
-function App() {
+function Users() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -17,7 +17,7 @@ function App() {
       Axios.get('http://localhost:3002/api/users/get').then((response) => {
         setUsersList(response.data)
       })
-    },[]);
+    })
   
     const submitUser = () => { 
       Axios.post('http://localhost:3002/api/users/insert', {
