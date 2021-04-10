@@ -72,7 +72,7 @@ function Users() {
           setlast_name(e.target.value)
         } }/>
         <label> Email:</label>
-        <input name="email" onChange={(e) => {
+        <input type="text" name="email" onChange={(e) => {
           setEmail(e.target.value)
         }}/>
         

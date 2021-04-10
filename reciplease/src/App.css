@@ -16,9 +16,17 @@
   font-size: 25px;
 }
 
-.card {
+#users .card {
   width: 500px;
   height: 300px;
+  border: 2px solid grey;
+  border-radius: 15px;
+  margin: 10px;
+}
+
+#recipes .card {
+  width: 500px;
+  height: 700px;
   border: 2px solid grey;
   border-radius: 15px;
   margin: 10px;

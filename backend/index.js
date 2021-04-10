@@ -18,7 +18,7 @@ app.use(express.json());
 
 // users endpoints
 app.get("/api/users/get", (require, response) => {
-  const sqlSelect = "SELECT * FROM users";
+  const sqlSelect = "SELECT * FROM users LIMIT 15";
   db.query(sqlSelect, (err, result) => {
       response.send(result);
   });
@@ -27,7 +27,7 @@ app.get("/api/users/get", (require, response) => {
 app.get("/api/users/getSelected/:first_name", (require, response) => {
   const first_name = require.params.first_name;
 
-  const sqlSelect = "SELECT * FROM users WHERE `first_name` LIKE ?";
+  const sqlSelect = "SELECT * FROM users WHERE `first_name` LIKE ? LIMIT 15";
   db.query(sqlSelect, first_name, (err, result) => {
       response.send(result);
 
@@ -72,17 +72,17 @@ app.put("/api/users/update/", (require, response) => {
 
 // recipes endpoints
 app.get("/api/recipes/get", (require, response) => {
-  const sqlSelect = "SELECT * FROM recipes";
+  const sqlSelect = "SELECT * FROM recipes LIMIT 15";
   db.query(sqlSelect, (err, result) => {
       response.send(result);
   });
 });
 
-app.get("/api/recipes/getSelected/:recipe_name", (require, response) => {
-  const recipe_name = require.params.recipe_name;
+app.get("/api/recipes/getSelected/:recipe_id", (require, response) => {
+  const recipe_id = require.params.recipe_id;
 
-  const sqlSelect = "SELECT * FROM recipes WHERE `recipe_name`= ?";
-  db.query(sqlSelect, recipe_name, (err, result) => {
+  const sqlSelect = "SELECT * FROM recipes WHERE `recipe_id` = ? LIMIT 15";
+  db.query(sqlSelect, recipe_id, (err, result) => {
       response.send(result);
 
       if (err) 
@@ -91,53 +91,49 @@ app.get("/api/recipes/getSelected/:recipe_name", (require, response) => {
 });
 
 // might need to add other attributes
-/*
+
 app.post("/api/recipes/insert", (require, response) => {
-  // need to tie to a user (user_id)
   const rating = require.body.rating;
   const prep_time_minutes = require.body.prep_time_minutes;
   const serving_size = require.body.serving_size;
   const recipe_description = require.body.recipe_description;
   const recipe_name = require.body.recipe_name;
 
-  const sqlInsert = "INSERT INTO `recipes` (`rating`, `prep_time_minutes`, `serving_size`, `recipe_description`, `recipe_name`) VALUES (?,?,?,?,?)";
+  const sqlInsert = "INSERT INTO `recipes` (`user_id`, `rating`, `prep_time_minutes`, `serving_size`, `recipe_description`, `recipe_name`) VALUES (1000, ?,?,?,?,?)";
   db.query(sqlInsert, [rating, prep_time_minutes, serving_size, recipe_description, recipe_name], (err, result) => {
       if (err)
         console.log(err);
   })
 });
-*/
+
 
 // figure out based on what are we going to delete
-/*
-app.delete("/api/recipes/delete/:", (require, response) => {
-  const email = require.params.email;
 
-  const sqlDelete = "DELETE FROM `recipes` WHERE `email`= ?";
-  db.query(sqlDelete, email, (err, result) => {
+app.delete("/api/recipes/delete/:recipe_id", (require, response) => {
+  const recipe_id = require.params.recipe_id;
+
+  const sqlDelete = "DELETE FROM `recipes` WHERE `recipe_id` = ?";
+  db.query(sqlDelete, recipe_id, (err, result) => {
       if (err) 
         console.log(err);
   })
 });
-*/
 
-/*
-app.put("/api/recipes/update/", (require, response) => {
-  // need to tie to a user (user_id)
+app.put("/api/recipes/update", (require, response) => {
+  const recipe_id = require.params.recipe_id;
   const rating = require.body.rating;
   const prep_time_minutes = require.body.prep_time_minutes;
   const serving_size = require.body.serving_size;
   const recipe_description = require.body.recipe_description;
   const recipe_name = require.body.recipe_name;
 
-  // figure out based on what are we going to update
-  const sqlUpdate = "UPDATE `recipes` SET `rating` = ?, `prep_time_minutes` = ?, `serving_size` = ?, `recipe_description` = ?, `recipe_name` = ? WHERE `email`= ?";
-  db.query(sqlUpdate, [rating, prep_time_minutes, serving_size, recipe_description, recipe_name], (err, result) => {
+  const sqlUpdate = "UPDATE `recipes` SET `rating` = ?, `prep_time_minutes` = ?, `serving_size` = ?, `recipe_description` = ?, `recipe_name` = ? WHERE `recipe_id`= ?";
+  db.query(sqlUpdate, [rating, prep_time_minutes, serving_size, recipe_description, recipe_name, recipe_id], (err, result) => {
       if (err) 
         console.log(err);
   })
 });
-*/
+
 
 // ingredients endpoints
 
