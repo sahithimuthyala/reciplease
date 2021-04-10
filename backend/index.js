@@ -24,26 +24,27 @@ app.get("/api/users/get", (require, response) => {
   });
 });
 
-app.get("/api/users/getSelected/:firstName", (require, response) => {
-  const firstName = require.params.firstName;
+app.get("/api/users/getSelected/:first_name", (require, response) => {
+  const first_name = require.params.first_name;
 
-  const sqlSelect = "SELECT * FROM users WHERE `firstName`= ?";
-  db.query(sqlSelect, firstName, (err, result) => {
+  const sqlSelect = "SELECT * FROM users WHERE `first_name`= ?";
+  db.query(sqlSelect, first_name, (err, result) => {
       response.send(result);
 
       if (err) 
-      console.log(error);
+        console.log(err);
   });
 });
 
 app.post("/api/users/insert", (require, response) => {
-  const firstName = require.body.firstName;
-  const lastName = require.body.lastName;
+  const first_name = require.body.first_name;
+  const last_name = require.body.last_name;
   const email = require.body.email;
 
   const sqlInsert = "INSERT INTO `users` (`first_name`, `last_name`, `email`) VALUES (?,?,?)";
-  db.query(sqlInsert, [firstName, lastName, email], (err, result) => {
-      console.log(error);
+  db.query(sqlInsert, [first_name, last_name, email], (err, result) => {
+      if (err)
+        console.log(err);
   })
 });
 
@@ -53,19 +54,19 @@ app.delete("/api/users/delete/:email", (require, response) => {
   const sqlDelete = "DELETE FROM `users` WHERE `email`= ?";
   db.query(sqlDelete, email, (err, result) => {
       if (err) 
-      console.log(error);
+        console.log(err);
   })
 });
 
 app.put("/api/users/update/", (require, response) => {
-  const firstName = require.body.firstName;
-  const lastName = require.body.lastName;
+  const first_name = require.body.first_name;
+  const last_name = require.body.last_name;
   const email = require.body.email;
 
-  const sqlUpdate = "UPDATE `users` SET `firstName` = ?, `lastName` = ? WHERE `email`= ?";
-  db.query(sqlUpdate, [firstName, lastName, email], (err, result) => {
+  const sqlUpdate = "UPDATE `users` SET `first_name` = ?, `last_name` = ? WHERE `email`= ?";
+  db.query(sqlUpdate, [first_name, last_name, email], (err, result) => {
       if (err) 
-      console.log(error);
+        console.log(err);
   })
 });
 
