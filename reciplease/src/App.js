@@ -5,7 +5,7 @@ import Axios from 'axios';
 function App() {
   return (
     <div className="App">
-      <h1>CS 411 Project</h1>
+      <h1>CS 411 Project: ReciPlease</h1>
       <h2>Team: Outer Join, but we like to call ourselves databaes</h2>
 
       <div className="form">
