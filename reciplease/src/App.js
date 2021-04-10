@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useReducer} from "react";
 import Axios from 'axios';
 
 function App() {
@@ -10,16 +10,18 @@ function App() {
 
       <div className="form">
         <h3> Homepage:</h3>
-        <button> Users</button>
+        <a href='localhost:3000/users'>
+          <button> Users</button>
+        </a>
         <br/>
         <br/>
         <button> Recipes</button>
         <br/>
         <br/>
+        <button> Ingredients</button>
+        <br/>
+        <br/>
         <button> Tags</button>
-        <br/>
-        <br/>
-        <button> Favorites</button>
         <br/>
         <br/>
         <button> Advanced Queries</button>
