@@ -5,18 +5,24 @@ import Axios from 'axios';
 function App() {
   return (
     <div className="App">
-      <h1>CRUD APPLICATIONS</h1>
+      <h1>CS 411 Project</h1>
+      <h2>Team: Outer Join, but we like to call ourselves databaes</h2>
 
       <div className="form">
-        <label> Movie Name:</label>
-        <input type="text" name="movieName" />
-        <label> Review:</label>
-        <input type="text" name="Review" />
-
-        <button> Submit</button>
-
-
-        
+        <h3> Homepage:</h3>
+        <button> Users</button>
+        <br/>
+        <br/>
+        <button> Recipes</button>
+        <br/>
+        <br/>
+        <button> Tags</button>
+        <br/>
+        <br/>
+        <button> Favorites</button>
+        <br/>
+        <br/>
+        <button> Advanced Queries</button>
       </div>
 
     </div>
