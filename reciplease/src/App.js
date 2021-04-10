@@ -1,6 +1,4 @@
 import './App.css';
-import React, {useState, useEffect, useReducer} from "react";
-import Axios from 'axios';
 
 function App() {
   return (
@@ -10,21 +8,49 @@ function App() {
 
       <div className="form">
         <h3> Homepage:</h3>
-        <a href='localhost:3000/users'>
-          <button> Users</button>
-        </a>
+        <button id="users_btn" onClick={() => {
+          document.getElementById('users').style.display = 'block';
+          document.getElementById('ingredients').style.display = 'none';
+          document.getElementById('recipes').style.display = 'none';
+          document.getElementById('tags').style.display = 'none';
+          document.getElementById('advanced_queries').style.display = 'none';
+        }}> Users</button>
         <br/>
         <br/>
-        <button> Recipes</button>
+        <button id="recipes_btn" onClick={() => {
+          document.getElementById('users').style.display = 'none';
+          document.getElementById('ingredients').style.display = 'none';
+          document.getElementById('recipes').style.display = 'block';
+          document.getElementById('tags').style.display = 'none';
+          document.getElementById('advanced_queries').style.display = 'none';
+        }}> Recipes</button>
         <br/>
         <br/>
-        <button> Ingredients</button>
+        <button id="ingredients_btn" onClick={() => {
+          document.getElementById('users').style.display = 'none';
+          document.getElementById('ingredients').style.display = 'block';
+          document.getElementById('recipes').style.display = 'none';
+          document.getElementById('tags').style.display = 'none';
+          document.getElementById('advanced_queries').style.display = 'none';
+        }}> Ingredients</button>
         <br/>
         <br/>
-        <button> Tags</button>
+        <button id="tags_btn" onClick={() => {
+          document.getElementById('users').style.display = 'none';
+          document.getElementById('ingredients').style.display = 'none';
+          document.getElementById('recipes').style.display = 'none';
+          document.getElementById('tags').style.display = 'block';
+          document.getElementById('advanced_queries').style.display = 'none';
+        }}> Tags</button>
         <br/>
         <br/>
-        <button> Advanced Queries</button>
+        <button id="advanced_queries_btn" onClick={() => {
+          document.getElementById('users').style.display = 'none';
+          document.getElementById('ingredients').style.display = 'none';
+          document.getElementById('recipes').style.display = 'none';
+          document.getElementById('tags').style.display = 'none';
+          document.getElementById('advanced_queries').style.display = 'block';
+        }}> Advanced Queries</button>
       </div>
 
     </div>
