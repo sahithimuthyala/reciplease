@@ -120,7 +120,7 @@ app.delete("/api/recipes/delete/:recipe_id", (require, response) => {
 });
 
 app.put("/api/recipes/update", (require, response) => {
-  const recipe_id = require.params.recipe_id;
+  const recipe_id = require.body.recipe_id;
   const rating = require.body.rating;
   const prep_time_minutes = require.body.prep_time_minutes;
   const serving_size = require.body.serving_size;
