@@ -23,7 +23,7 @@ function Recipes() {
     Axios.get('http://localhost:3002/api/recipes/get').then((response) => {
       set_recipes_list(response.data)
     })
-  })
+  }, [])
 
   const submitRecipe = () => { 
     Axios.post('http://localhost:3002/api/recipes/insert', {
@@ -33,6 +33,7 @@ function Recipes() {
       recipe_description: recipe_description,
       recipe_name: recipe_name,
     }).then(() => {
+      set_recipes_list([])
       Axios.get('http://localhost:3002/api/recipes/get').then((response) => {
         set_recipes_list(response.data)
       })
@@ -46,7 +47,12 @@ function Recipes() {
   };
 
   const deleteRecipe = (recipe_id) => {
-    Axios.delete(`http://localhost:3002/api/recipes/delete/${recipe_id}`);
+    Axios.delete(`http://localhost:3002/api/recipes/delete/${recipe_id}`).then(() => {
+      set_recipes_list([])
+      Axios.get('http://localhost:3002/api/recipes/get').then((response) => {
+        set_recipes_list(response.data)
+      })
+    });
   };
 
   const updateRecipe = (recipe_id) => {
@@ -59,6 +65,11 @@ function Recipes() {
         serving_size: new_serving_size,
         recipe_description: new_recipe_description,
         recipe_name: new_recipe_name,
+    }).then(() => {
+      set_recipes_list([])
+      Axios.get('http://localhost:3002/api/recipes/get').then((response) => {
+        set_recipes_list(response.data)
+      })
     });
     set_new_rating("")
     set_new_prep_time_minutes("")

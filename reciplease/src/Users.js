@@ -17,29 +17,31 @@ function Users() {
     Axios.get('http://localhost:3002/api/users/get').then((response) => {
       setUsersList(response.data)
     })
-  })
+  }, [])
 
   const submitUser = () => { 
     Axios.post('http://localhost:3002/api/users/insert', {
       first_name: first_name,
       last_name: last_name,
       email: email,
+    }).then(() => {
+      setUsersList([])
+      Axios.get('http://localhost:3002/api/users/get').then((response) => {
+        setUsersList(response.data)
+      })
     });
     setfirst_name("")
     setlast_name("")
     setEmail("")
-    setUsersList([
-      ...userList,
-      {
-        first_name: first_name,
-        last_name: last_name,
-        email: email,
-      },
-    ]);
   };
 
   const deleteUser = (email) => {
-    Axios.delete(`http://localhost:3002/api/users/delete/${email}`);
+    Axios.delete(`http://localhost:3002/api/users/delete/${email}`).then(() => {
+      setUsersList([])
+      Axios.get('http://localhost:3002/api/users/get').then((response) => {
+        setUsersList(response.data)
+      })
+    });
   };
 
   const updateUser = (email) => {
@@ -47,6 +49,11 @@ function Users() {
       first_name: newfirst_name,
       last_name: newlast_name,
       email: email,
+    }).then(() => {
+      setUsersList([])
+      Axios.get('http://localhost:3002/api/users/get').then((response) => {
+        setUsersList(response.data)
+      })
     });
     setNewfirst_name("")
     setNewlast_name("")
