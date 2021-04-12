@@ -3,10 +3,23 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <h1>CS 411 Project: ReciPlease</h1>
-      <h2>Team: Outer Join, but we like to call ourselves databaes</h2>
-
-      <div className="form">
+      {/* <h1>CS 411 Project: ReciPlease</h1>
+      <h2>All the recipes to please you!</h2>
+      <h4>Team: Outer Join, but we like to call ourselves databaes</h4> */}
+      {/* <div style={{
+          backgroundImage: `url(https://foodsguy.com/wp-content/uploads/2019/08/Best-Cutting-Board-for-Vegetables.jpg)`
+      }}></div> */}
+      <div class="demo-wrap">
+      <img
+          class="demo-bg"
+          src="https://foodsguy.com/wp-content/uploads/2019/08/Best-Cutting-Board-for-Vegetables.jpg"
+          alt=""
+        ></img>
+        <div class="demo-content">
+          <h1>CS 411 Project: ReciPlease</h1>
+          <h2>All the recipes to please you!</h2>
+          <h4>Team: Outer Join, but we like to call ourselves databaes</h4>
+          <div className="form">
         <h3> Homepage:</h3>
         <button id="users_btn" onClick={() => {
           document.getElementById('users').style.display = 'block';
@@ -52,6 +65,13 @@ function App() {
           document.getElementById('advanced_queries').style.display = 'block';
         }}> Advanced Queries</button>
       </div>
+        </div>
+        
+      </div>
+       
+   
+      
+     
 
     </div>
   );

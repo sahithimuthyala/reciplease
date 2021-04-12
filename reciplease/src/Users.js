@@ -68,8 +68,10 @@ function Users() {
   return (
     <div className="Users">
       <h1> Users</h1>
+      
 
       <div className="form">
+      <h3> Insert users</h3>
         <label> First Name:</label>
         <input type="text" name="first_name" onChange={(e) => {
           setfirst_name(e.target.value)
@@ -84,7 +86,7 @@ function Users() {
         }}/>
         
         <button onClick={submitUser}> Submit</button>
-
+        <h4>Find Users</h4>
         <input name="searchfirst_name" onChange={(e) => {
             setSearchfirst_name(e.target.value)
         }}></input>

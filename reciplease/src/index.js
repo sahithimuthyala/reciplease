@@ -8,6 +8,7 @@ import Users from './Users';
 import AdvQueries from './AdvQueries';
 
 import Ingredients from './Ingredients';
+import Tags from './Tags';
 
 ReactDOM.render(
     <App />,
@@ -37,4 +38,9 @@ ReactDOM.render(
     <AdvQueries />,
     
     document.getElementById('advanced_queries')
+);
+ReactDOM.render(
+    <Tags />,
+    
+    document.getElementById('tags')
 );

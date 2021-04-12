@@ -89,6 +89,7 @@ function Recipes() {
       <h1> Recipes</h1>
 
       <div className="form">
+        <h4> Insert Recipes</h4>
         <label> Recipe Name:</label>
         <input type="text" name="recipe_name" onChange={(e) => {
           set_recipe_name(e.target.value)
@@ -112,6 +113,7 @@ function Recipes() {
         
         <button onClick={submitRecipe}> Submit</button>
 
+        <h4> Search recipes</h4>
         <input name="search_recipe_id" onChange={(e) => {
             set_search_recipe_id(e.target.value)
         }}></input>

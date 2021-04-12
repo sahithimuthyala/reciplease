@@ -203,6 +203,61 @@ app.put("/api/ingredients/update", (require, response) => {
 });
 
 // tags endpoints
+app.get("/api/tags/get", (require, response) => {
+  const sqlSelect = "SELECT * FROM tags LIMIT 15";
+  db.query(sqlSelect, (err, result) => {
+      response.send(result);
+  });
+});
+
+app.get("/api/tags/getSelected/:tag_id", (require, response) => {
+  const tag_id = require.params.tag_id;
+
+  const sqlSelect = "SELECT * FROM tags WHERE `tag_id` = ? LIMIT 15";
+  db.query(sqlSelect, tag_id, (err, result) => {
+      response.send(result);
+
+      if (err) 
+        console.log(err);
+  });
+});
+
+app.post("/api/tags/insert", (require, response) => {
+
+  const tag_description = require.body.tag_description;
+
+
+  const sqlInsert = "INSERT INTO `tags` (`recipe_id`, `tag_description`) VALUES (13, ?)";
+  db.query(sqlInsert, [tag_description], (err, result) => {
+      if (err)
+        console.log(err);
+  })
+});
+
+
+// figure out based on what are we going to delete
+
+app.delete("/api/tags/delete/:tag_id", (require, response) => {
+  const tag_id = require.params.tag_id;
+
+  const sqlDelete = "DELETE FROM `tags` WHERE `tag_id` = ?";
+  db.query(sqlDelete, tag_id, (err, result) => {
+      if (err) 
+        console.log(err);
+  })
+});
+
+app.put("/api/tags/update", (require, response) => {
+  const tag_id = require.body.tag_id;
+  const tag_description = require.body.tag_description;
+
+
+  const sqlUpdate = "UPDATE `tags` SET `tag_description` = ? WHERE `tag_id`= ?";
+  db.query(sqlUpdate, [tag_description, tag_id], (err, result) => {
+      if (err) 
+        console.log(err);
+  })
+});
 
 // advanced query endpoints
 
