@@ -143,6 +143,65 @@ app.put("/api/recipes/update", (require, response) => {
 
 // ingredients endpoints
 
+app.get("/api/ingredients/get", (require, response) => {
+  const sqlSelect = "SELECT ingredient_id, ingredient_description, recipe_name FROM ingredients NATURAL JOIN recipes LIMIT 15";
+  db.query(sqlSelect, (err, result) => {
+      response.send(result);
+  });
+});
+
+app.get("/api/ingredients/getSelected/:ingredient_id", (require, response) => {
+  const ingredient_id = require.params.ingredient_id;
+
+  const sqlSelect = "SELECT ingredient_id, ingredient_description, recipe_name FROM ingredients NATURAL JOIN recipes WHERE `ingredient_id` = ? LIMIT 15";
+  db.query(sqlSelect, ingredient_id, (err, result) => {
+      response.send(result);
+
+      if (err) 
+        console.log(err);
+  });
+});
+
+// might need to add other attributes
+
+app.post("/api/ingredients/insert", (require, response) => {
+  const recipe_id = require.body.recipe_id;
+  const ingredient_description = require.body.ingredient_description;
+
+  const sqlInsert = "INSERT INTO `ingredients` (`recipe_id`, `ingredient_description`) VALUES (?,?)";
+  db.query(sqlInsert, [recipe_id, ingredient_description], (err, result) => {
+      if (err)
+        console.log(err);
+      response.sendStatus(204)
+  })
+});
+
+
+// figure out based on what are we going to delete
+
+app.delete("/api/ingredients/delete/:ingredient_id", (require, response) => {
+  const ingredient_id = require.params.ingredient_id;
+
+  const sqlDelete = "DELETE FROM `ingredients` WHERE `ingredient_id` = ?";
+  db.query(sqlDelete, ingredient_id, (err, result) => {
+      if (err) 
+        console.log(err);
+      response.sendStatus(204)
+  })
+});
+
+app.put("/api/ingredients/update", (require, response) => {
+  const ingredient_id = require.body.ingredient_id;
+  const ingredient_description = require.body.ingredient_description;
+
+  const sqlUpdate = "UPDATE `ingredients` SET `ingredient_description` = ? WHERE `ingredient_id`= ?";
+  db.query(sqlUpdate, [ingredient_description, ingredient_id], (err, result) => {
+      if (err) 
+        console.log(err);
+      response.sendStatus(204)
+  })
+});
+
 // tags endpoints
 
 app.listen(3002, () => {
