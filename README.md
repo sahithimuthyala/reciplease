@@ -8,8 +8,13 @@ Sahithi Muthyala, Akshit Deshpande, Adarsh Suresh, Noopur Shanbhogue
 - Express.js
 - MySQL
 
+### To see our work:
+- Clone the repository
+- Run *npm start* in the reciplease (frontend) directory
+- Run *npm start* in the backend directory
+
 ### Breakdown of Contributions:
-- Users - Sahithi
+- Users, README.md - Sahithi
 - Recipes - Akshit
 - Ingredients - Adarsh
 - Tags - Noopur
