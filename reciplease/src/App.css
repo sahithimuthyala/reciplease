@@ -1,11 +1,33 @@
 .App {
   text-align: center;
 }
+/* .Temmp{
+  opacity: 0.2; 
+  filter: alpha(opacity=100);
+} */
+.demo-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.demo-bg {
+  opacity: 0.5;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+}
+
+.demo-content {
+  position: relative;
+}
 
 .form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  
   justify-content: center;
 }
 
@@ -19,17 +41,38 @@
 #users .card {
   width: 500px;
   height: 300px;
-  border: 2px solid grey;
+  border: 2px solid rgb(0, 0, 0);
   border-radius: 15px;
   margin: 10px;
 }
 
+#users .form {
+  background-color: rgb(250, 244, 232);
+}
+
+
 #recipes .card {
   width: 500px;
   height: 700px;
-  border: 2px solid grey;
+  border: 2px solid rgb(0, 0, 0);
   border-radius: 15px;
   margin: 10px;
+}
+#recipes .form {
+  background-color: rgb(250, 234, 203);
+}
+#ingredients .form {
+  background-color: rgb(250, 224, 171);
+}
+#tags .card {
+  width: 500px;
+  height: 200px;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 15px;
+  margin: 10px;
+}
+#tags .form {
+  background-color: rgb(245, 214, 153);
 }
 
 #advanced_queries .card {
@@ -39,7 +82,9 @@
   border-radius: 15px;
   margin: 10px;
 }
-
+#advanced_queries .form {
+  background-color: rgb(243, 194, 95);
+}
 #updateInput {
   width: 100px;
   height: 20px;
