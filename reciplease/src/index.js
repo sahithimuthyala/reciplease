@@ -36,5 +36,5 @@ ReactDOM.render(
 ReactDOM.render(
     <AdvQueries />,
     
-    document.getElementById('advanced-queries')
+    document.getElementById('advanced_queries')
 );
