@@ -14,7 +14,7 @@ Sahithi Muthyala, Akshit Deshpande, Adarsh Suresh, Noopur Shanbhogue
 - Run *npm start* in the backend directory
 
 ### Breakdown of Contributions:
-- Users, README.md - Sahithi
+- Users, README.md - Sahithi (the anon contributor)
 - Recipes - Akshit
 - Ingredients - Adarsh
 - Tags - Noopur
