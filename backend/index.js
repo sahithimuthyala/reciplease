@@ -45,6 +45,7 @@ app.post("/api/users/insert", (require, response) => {
   db.query(sqlInsert, [first_name, last_name, email], (err, result) => {
       if (err)
         console.log(err);
+      response.sendStatus(204)
   })
 });
 
@@ -55,6 +56,7 @@ app.delete("/api/users/delete/:email", (require, response) => {
   db.query(sqlDelete, email, (err, result) => {
       if (err) 
         console.log(err);
+      response.sendStatus(204)
   })
 });
 
@@ -67,6 +69,7 @@ app.put("/api/users/update/", (require, response) => {
   db.query(sqlUpdate, [first_name, last_name, email], (err, result) => {
       if (err) 
         console.log(err);
+      response.sendStatus(204)
   })
 });
 
@@ -103,6 +106,7 @@ app.post("/api/recipes/insert", (require, response) => {
   db.query(sqlInsert, [rating, prep_time_minutes, serving_size, recipe_description, recipe_name], (err, result) => {
       if (err)
         console.log(err);
+      response.sendStatus(204)
   })
 });
 
@@ -116,6 +120,7 @@ app.delete("/api/recipes/delete/:recipe_id", (require, response) => {
   db.query(sqlDelete, recipe_id, (err, result) => {
       if (err) 
         console.log(err);
+      response.sendStatus(204)
   })
 });
 
@@ -131,6 +136,7 @@ app.put("/api/recipes/update", (require, response) => {
   db.query(sqlUpdate, [rating, prep_time_minutes, serving_size, recipe_description, recipe_name, recipe_id], (err, result) => {
       if (err) 
         console.log(err);
+      response.sendStatus(204)
   })
 });
 
