@@ -6,6 +6,8 @@ import Recipes from './Recipes';
 
 import Users from './Users';
 
+import Ingredients from './Ingredients';
+
 ReactDOM.render(
     <App />,
     
@@ -22,4 +24,10 @@ ReactDOM.render(
     <Recipes />,
     
     document.getElementById('recipes')
+);
+
+ReactDOM.render(
+    <Ingredients />,
+    
+    document.getElementById('ingredients')
 );
