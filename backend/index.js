@@ -145,6 +145,132 @@ app.put("/api/recipes/update", (require, response) => {
 
 // tags endpoints
 
+// advanced query endpoints
+
+/*
+Sahi
+
+SELECT first_name, last_name, COUNT(DISTINCT recipe_id) AS num_recipes, COUNT(DISTINCT user_id2) AS num_friends
+
+FROM users NATURAL JOIN recipes NATURAL JOIN friends_with
+
+GROUP BY first_name, last_name
+
+ORDER BY num_recipes DESC
+
+LIMIT 15;
+________________________
+Akshit
+
+SELECT tag_description AS name, COUNT(DISTINCT user_id) AS ct
+
+FROM users NATURAL JOIN recipes NATURAL JOIN tags
+
+GROUP BY tag_description
+
+UNION
+
+SELECT first_name AS name, COUNT(DISTINCT tag_id) AS ct
+
+FROM users NATURAL JOIN recipes NATURAL JOIN tags
+
+GROUP BY first_name
+
+ORDER BY ct DESC
+
+LIMIT 15;
+________________________
+Adarsh
+
+SELECT first_name, last_name, email, AVG(rating) AS avg_ratings, AVG(prep_time_minutes) AS avg_prep 
+
+FROM recipes NATURAL JOIN users 
+
+GROUP BY user_id
+
+ORDER BY last_name
+
+LIMIT 15;
+________________________
+Noopur
+
+SELECT first_name, last_name, tag_description, rating
+
+FROM users NATURAL JOIN recipes NATURAL JOIN tags
+
+WHERE tag_description LIKE "vegetarian"
+
+GROUP BY tag_description, first_name, last_name, rating
+
+ORDER BY rating DESC
+
+LIMIT 15;
+*/
+
+app.get("/api/advancedqueries/sahi/get", (require, response) => {
+  const sqlSelect = `SELECT first_name, last_name, COUNT(DISTINCT recipe_id) AS num_recipes, COUNT(DISTINCT user_id2) AS num_friends
+                    FROM users NATURAL JOIN recipes NATURAL JOIN friends_with
+                    GROUP BY first_name, last_name
+                    ORDER BY num_recipes DESC
+                    LIMIT 15`;
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+      response.send(result);
+  });
+});
+
+app.get("/api/advancedqueries/akshit/get", (require, response) => {
+  const sqlSelect = `SELECT tag_description AS name, COUNT(DISTINCT user_id) AS ct
+                    FROM users NATURAL JOIN recipes NATURAL JOIN tags
+                    GROUP BY tag_description
+                    
+                    UNION
+  
+                    SELECT first_name AS name, COUNT(DISTINCT tag_id) AS ct
+                    FROM users NATURAL JOIN recipes NATURAL JOIN tags
+                    GROUP BY first_name
+  
+                    ORDER BY ct DESC
+                    LIMIT 15`;
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+      response.send(result);
+  });
+});
+
+app.get("/api/advancedqueries/adarsh/get", (require, response) => {
+  const sqlSelect = `SELECT first_name, last_name, email, AVG(rating) AS avg_ratings, AVG(prep_time_minutes) AS avg_prep 
+                    FROM recipes NATURAL JOIN users 
+                    GROUP BY user_id
+                    ORDER BY last_name
+                    LIMIT 15`;
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+      response.send(result);
+  });
+});
+
+app.get("/api/advancedqueries/noopur/get", (require, response) => {
+  const sqlSelect = `SELECT first_name, last_name, tag_description, rating
+                    FROM users NATURAL JOIN recipes NATURAL JOIN tags
+                    WHERE tag_description LIKE "vegetarian"
+                    GROUP BY tag_description, first_name, last_name, rating
+                    ORDER BY rating DESC
+                    LIMIT 15`;
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+      response.send(result);
+  });
+});
+
 app.listen(3002, () => {
   console.log("running on port 3002");
 })

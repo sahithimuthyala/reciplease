@@ -5,6 +5,7 @@ import App from './App';
 import Recipes from './Recipes';
 
 import Users from './Users';
+import AdvQueries from './AdvQueries';
 
 ReactDOM.render(
     <App />,
@@ -22,4 +23,10 @@ ReactDOM.render(
     <Recipes />,
     
     document.getElementById('recipes')
+);
+
+ReactDOM.render(
+    <AdvQueries />,
+    
+    document.getElementById('advanced_queries')
 );
