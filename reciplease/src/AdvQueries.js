@@ -1,6 +1,7 @@
 import './App.css';
 import React, {useState, useEffect} from "react";
 import Axios from 'axios';
+Axios.defaults.withCredentials = true
 
 function AdvQueries() {
   const [sahiList, setSahiList] = useState([]);

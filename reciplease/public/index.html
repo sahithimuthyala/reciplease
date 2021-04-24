@@ -25,9 +25,17 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script id="react-dotenv" src="./env.js"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="login"></div>
     <div id="root"></div>
     <div id="users"></div>
     <div id="recipes"></div>
@@ -44,46 +52,47 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <script>
+      function showUsers() {
+        document.getElementById("users").style.display = "block";
+        document.getElementById("ingredients").style.display = "none";
+        document.getElementById("recipes").style.display = "none";
+        document.getElementById("tags").style.display = "none";
+        document.getElementById("advanced_queries").style.display = "none";
+      }
+
+      function showRecipes() {
+        document.getElementById("users").style.display = "none";
+        document.getElementById("ingredients").style.display = "none";
+        document.getElementById("recipes").style.display = "block";
+        document.getElementById("tags").style.display = "none";
+        document.getElementById("advanced_queries").style.display = "none";
+      }
+
+      function showIngredients() {
+        document.getElementById("users").style.display = "none";
+        document.getElementById("ingredients").style.display = "none";
+        document.getElementById("recipes").style.display = "block";
+        document.getElementById("tags").style.display = "none";
+        document.getElementById("advanced_queries").style.display = "none";
+      }
+
+      function showTags() {
+        document.getElementById("users").style.display = "none";
+        document.getElementById("ingredients").style.display = "none";
+        document.getElementById("recipes").style.display = "none";
+        document.getElementById("tags").style.display = "block";
+        document.getElementById("advanced_queries").style.display = "none";
+      }
+
+      function showAdvancedQueries() {
+        document.getElementById("users").style.display = "none";
+        document.getElementById("ingredients").style.display = "none";
+        document.getElementById("recipes").style.display = "none";
+        document.getElementById("tags").style.display = "none";
+        document.getElementById("advanced_queries").style.display = "block";
+      }
+    </script>
   </body>
-  <script>
-    function showUsers() {
-       document.getElementById('users').style.display = 'block';
-       document.getElementById('ingredients').style.display = 'none';
-       document.getElementById('recipes').style.display = 'none';
-       document.getElementById('tags').style.display = 'none';
-       document.getElementById('advanced_queries').style.display = 'none';
-     }
- 
-     function showRecipes() {
-       document.getElementById('users').style.display = 'none';
-       document.getElementById('ingredients').style.display = 'none';
-       document.getElementById('recipes').style.display = 'block';
-       document.getElementById('tags').style.display = 'none';
-       document.getElementById('advanced_queries').style.display = 'none';
-     }
- 
-     function showIngredients() {
-       document.getElementById('users').style.display = 'none';
-       document.getElementById('ingredients').style.display = 'none';
-       document.getElementById('recipes').style.display = 'block';
-       document.getElementById('tags').style.display = 'none';
-       document.getElementById('advanced_queries').style.display = 'none';
-     }
- 
-     function showTags() {
-       document.getElementById('users').style.display = 'none';
-       document.getElementById('ingredients').style.display = 'none';
-       document.getElementById('recipes').style.display = 'none';
-       document.getElementById('tags').style.display = 'block';
-       document.getElementById('advanced_queries').style.display = 'none';
-     }
- 
-     function showAdvancedQueries() {
-       document.getElementById('users').style.display = 'none';
-       document.getElementById('ingredients').style.display = 'none';
-       document.getElementById('recipes').style.display = 'none';
-       document.getElementById('tags').style.display = 'none';
-       document.getElementById('advanced_queries').style.display = 'block';
-     }
-   </script>
 </html>

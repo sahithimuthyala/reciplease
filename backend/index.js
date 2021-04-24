@@ -1,9 +1,14 @@
 const express = require("express");
 const path = require("path");
-const app = express();
+var app = express();
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+// var cookieParser = require('cookie-parser');
+var session = require('express-session')
+
+const { OAuth2Client } = require('google-auth-library')
+const client = new OAuth2Client(process.env.CLIENT_ID)
 
 var db = mysql.createConnection({
   host: '35.238.8.125',
@@ -12,9 +17,53 @@ var db = mysql.createConnection({
   database: 'db',
 });
 
-app.use(cors());
+var session_middleware = session({secret:'Keep it secret'
+,name:'uniqueSessionID'
+,saveUninitialized:false})
+
+app.use(session_middleware);
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
+  credentials: true
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+
+// var routesArray = ['/api/v1/auth/google/logged_in', '/api/v1/auth/google'];
+
+// app.use(cookieParser());
+
+// auth endpoints
+app.get("/api/v1/auth/google", (req, res) => {
+  if (req.session.email) {
+    res.send(true)
+  } else {
+    res.send(false)
+  }
+});
+
+app.post("/api/v1/auth/google", (req, res) => {
+  const { token }  = req.body
+  client.verifyIdToken({
+      idToken: token,
+      audience: process.env.CLIENT_ID
+  }).then((ticket) => {
+    const { email } = ticket.getPayload();  
+    req.session.email = email
+    res.sendStatus(201)
+  })
+})
+
+app.delete("/api/v1/auth/google", (req, res) => {
+  if (req.session.email) {
+    delete req.session.email
+    res.sendStatus(204);
+  } else {
+    res.send(true)
+  }
+})
 
 // users endpoints
 app.get("/api/users/get", (require, response) => {
@@ -40,7 +89,6 @@ app.post("/api/users/insert", (require, response) => {
   const first_name = require.body.first_name;
   const last_name = require.body.last_name;
   const email = require.body.email;
-
   const sqlInsert = "INSERT INTO `users` (`first_name`, `last_name`, `email`) VALUES (?,?,?)";
   db.query(sqlInsert, [first_name, last_name, email], (err, result) => {
       if (err)
@@ -131,7 +179,7 @@ app.put("/api/recipes/update", (require, response) => {
   const serving_size = require.body.serving_size;
   const recipe_description = require.body.recipe_description;
   const recipe_name = require.body.recipe_name;
-
+  console.log(require.session)
   const sqlUpdate = "UPDATE `recipes` SET `rating` = ?, `prep_time_minutes` = ?, `serving_size` = ?, `recipe_description` = ?, `recipe_name` = ? WHERE `recipe_id`= ?";
   db.query(sqlUpdate, [rating, prep_time_minutes, serving_size, recipe_description, recipe_name, recipe_id], (err, result) => {
       if (err) 

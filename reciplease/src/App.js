@@ -1,6 +1,14 @@
+import Axios from 'axios';
+
 import './App.css';
+Axios.defaults.withCredentials = true
 
 function App() {
+  function logout() {
+    Axios.delete(`http://localhost:3002/api/v1/auth/google`).then(() => {
+      window.location.reload(true);
+    })
+  }
   return (
     <div className="App">
       {/* <h1>CS 411 Project: ReciPlease</h1>
@@ -9,6 +17,9 @@ function App() {
       {/* <div style={{
           backgroundImage: `url(https://foodsguy.com/wp-content/uploads/2019/08/Best-Cutting-Board-for-Vegetables.jpg)`
       }}></div> */}
+      <button type="button" class="btn btn-default btn-sm" onClick={logout}>
+          <span class="glyphicon glyphicon-log-out"></span> Log out
+        </button>
       <div class="demo-wrap">
       <img
           class="demo-bg"
