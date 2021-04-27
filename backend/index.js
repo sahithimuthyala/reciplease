@@ -46,6 +46,8 @@ app.get("/api/v1/auth/google", (req, res) => {
 
 app.post("/api/v1/auth/google", (req, res) => {
   const { token }  = req.body
+  console.log('auth post')
+  console.log(req.body)
   client.verifyIdToken({
       idToken: token,
       audience: process.env.CLIENT_ID

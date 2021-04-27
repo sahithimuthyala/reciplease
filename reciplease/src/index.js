@@ -56,6 +56,7 @@ Axios.get('http://localhost:3002/api/v1/auth/google', { withCredentials: true })
         );
     } else {
         const handleLogin = async (googleData) => {
+            console.log('google data', googleData)
             await fetch("http://localhost:3002/api/v1/auth/google", {
                 method: "POST",
                 body: JSON.stringify({
