@@ -50,8 +50,33 @@ app.post("/api/v1/auth/google", (req, res) => {
       idToken: token,
       audience: process.env.CLIENT_ID
   }).then((ticket) => {
-    const { email } = ticket.getPayload();  
+    const { name, email } = ticket.getPayload();  
     req.session.email = email
+    db.query('SELECT * FROM `users` WHERE `email` = \'' + email + '\'', function(err, result) {
+      if(err) {
+          console.log(err)
+      } else {
+          if (result && result.length ) {
+              console.log('old user');
+          } else {
+              console.log('new user');
+              var firstName = name.substr(0,name.indexOf(' '));
+              var lastName = name.substr(name.indexOf(' ')+1);
+              const sqlInsert = "INSERT INTO `users` (`first_name`, `last_name`, `email`) VALUES (?,?,?)";
+              if (firstName === '') {
+                db.query(sqlInsert, [lastName, '', email], (err, result) => {
+                    if (err)
+                      console.log(err);
+                })
+              } else {
+                db.query(sqlInsert, [firstName, lastName, email], (err, result) => {
+                  if (err)
+                    console.log(err);
+              })
+              }
+          }
+      }
+    });
     res.sendStatus(201)
   })
 })
