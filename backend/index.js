@@ -57,9 +57,7 @@ app.post("/api/v1/auth/google", (req, res) => {
           console.log(err)
       } else {
           if (result && result.length ) {
-              console.log('old user');
           } else {
-              console.log('new user');
               var firstName = name.substr(0,name.indexOf(' '));
               var lastName = name.substr(name.indexOf(' ')+1);
               const sqlInsert = "INSERT INTO `users` (`first_name`, `last_name`, `email`) VALUES (?,?,?)";
@@ -175,11 +173,17 @@ app.post("/api/recipes/insert", (require, response) => {
   const recipe_description = require.body.recipe_description;
   const recipe_name = require.body.recipe_name;
 
-  const sqlInsert = "INSERT INTO `recipes` (`user_id`, `rating`, `prep_time_minutes`, `serving_size`, `recipe_description`, `recipe_name`) VALUES (1000, ?,?,?,?,?)";
-  db.query(sqlInsert, [rating, prep_time_minutes, serving_size, recipe_description, recipe_name], (err, result) => {
-      if (err)
-        console.log(err);
-      response.sendStatus(204)
+  
+  db.query('SELECT `user_id` FROM `users` WHERE `email` = \'' + require.session.email + '\'', (err, result) => {
+    if (err)
+      console.log(err)
+    const user_id = result[0].user_id
+    const sqlInsert = "INSERT INTO `recipes` (`user_id`, `rating`, `prep_time_minutes`, `serving_size`, `recipe_description`, `recipe_name`) VALUES (?,?,?,?,?,?)";
+    db.query(sqlInsert, [user_id, rating, prep_time_minutes, serving_size, recipe_description, recipe_name], (err, result) => {
+        if (err)
+          console.log(err);
+        response.sendStatus(204)
+    })
   })
 });
 
