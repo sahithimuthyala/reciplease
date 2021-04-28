@@ -25,6 +25,12 @@ function Recipes() {
       set_recipes_list(response.data)
     })
   }, [])
+  
+  useEffect(() => {
+    Axios.get('http://localhost:3002/api/recipes/get').then((response) => {
+      set_recipes_list(response.data)
+    })
+  }, [])
 
   const submitRecipe = () => { 
     Axios.post('http://localhost:3002/api/recipes/insert', {
