@@ -385,6 +385,19 @@ app.get("/api/advancedqueries/noopur/get", (require, response) => {
   });
 });
 
+// returns user stats based on email
+// output: [UserRecipes, FriendRecipes, FavoriteRecipes, UserRecipeStats, AllRecipeStats]
+app.get("/api/stats/get/:session_email", (require, response) => {
+  const session_email = require.params.session_email;
+  const sqlProcedure = `CALL P(?)`;
+  db.query(sqlProcedure, session_email, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    response.send(result);
+  });
+});
+
 app.listen(3002, () => {
   console.log("running on port 3002");
 })

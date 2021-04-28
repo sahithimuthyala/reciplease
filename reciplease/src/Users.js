@@ -13,6 +13,13 @@ function Users() {
 
   const [searchfirst_name, setSearchfirst_name] = useState("");
 
+  // stored procedure example
+  useEffect(() => {
+    Axios.get('http://localhost:3002/api/stats/get/lily.lyman@gmail.com').then((response) => {
+      console.log("procedure", response.data)
+    })
+  }, [])
+  
   useEffect(() => {
     Axios.get('http://localhost:3002/api/users/get').then((response) => {
       setUsersList(response.data)
