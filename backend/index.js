@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 // var cookieParser = require('cookie-parser');
 var session = require('express-session')
+const axios = require('axios');
 
 const { OAuth2Client } = require('google-auth-library')
 const client = new OAuth2Client(process.env.CLIENT_ID)
@@ -180,9 +181,11 @@ app.post("/api/recipes/insert", (require, response) => {
       console.log(err)
     const user_id = result[0].user_id
     const sqlInsert = "INSERT INTO `recipes` (`user_id`, `rating`, `prep_time_minutes`, `serving_size`, `recipe_description`, `recipe_name`) VALUES (?,?,?,?,?,?)";
-    db.query(sqlInsert, [user_id, rating, prep_time_minutes, serving_size, recipe_description, recipe_name], (err, result) => {
+    db.query(sqlInsert, [user_id, rating, prep_time_minutes, serving_size, recipe_description, recipe_name], (err, res) => {
         if (err)
           console.log(err);
+        
+        //console.log("187 " + res.insertId)
         response.sendStatus(204)
     })
   })
@@ -206,7 +209,6 @@ app.put("/api/recipes/update", (require, response) => {
   const serving_size = require.body.serving_size;
   const recipe_description = require.body.recipe_description;
   const recipe_name = require.body.recipe_name;
-  console.log(require.session)
 
   const sqlUpdate = "UPDATE `recipes` SET `rating` = ?, `prep_time_minutes` = ?, `serving_size` = ?, `recipe_description` = ?, `recipe_name` = ? WHERE `recipe_id`= ?";
   db.query(sqlUpdate, [rating, prep_time_minutes, serving_size, recipe_description, recipe_name, recipe_id], (err, result) => {
@@ -461,7 +463,6 @@ app.get("/api/stats/get", (require, response) => {
       console.log(err);
     }
 
-    console.log(result);
     response.send(result);
   });
 });
