@@ -1,4 +1,6 @@
+// const {Firestore} = require('@google-cloud/firestore');
 const express = require("express");
+// const {FirestoreStore} = require('@google-cloud/connect-firestore');
 const path = require("path");
 var app = express();
 const mysql = require("mysql");
@@ -10,6 +12,8 @@ require('dotenv').config()
 
 const { OAuth2Client } = require('google-auth-library')
 const client = new OAuth2Client(process.env.CLIENT_ID)
+const {Datastore} = require('@google-cloud/datastore');
+const {DatastoreStore} = require('@google-cloud/connect-datastore');
 
 var db = mysql.createConnection({
   host: '35.238.8.125',
@@ -18,7 +22,30 @@ var db = mysql.createConnection({
   database: 'db',
 });
 
-var session_middleware = session({secret:'Keep it secret'
+var session_middleware = session({
+  store: new DatastoreStore({
+    kind: 'express-sessions',
+
+    // Optional: expire the session after this many milliseconds.
+    // note: datastore does not automatically delete all expired sessions
+    // you may want to run separate cleanup requests to remove expired sessions
+    // 0 means do not expire
+    expirationMs: 0,
+
+    dataset: new Datastore({
+
+      // For convenience, @google-cloud/datastore automatically looks for the
+      // GCLOUD_PROJECT environment variable. Or you can explicitly pass in a
+      // project ID here:
+      projectId: 'reciplease-1',
+
+      // For convenience, @google-cloud/datastore automatically looks for the
+      // GOOGLE_APPLICATION_CREDENTIALS environment variable. Or you can
+      // explicitly pass in that path to your key file here:
+      keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
+    })
+  })
+  ,secret:'Keep it secret'
 ,name:'uniqueSessionID'
 ,saveUninitialized:false})
 
@@ -34,6 +61,8 @@ app.use(express.json());
 // var routesArray = ['/api/v1/auth/google/logged_in', '/api/v1/auth/google'];
 
 // app.use(cookieParser());
+
+app.use(express.static("build"));
 
 // auth endpoints
 app.get("/api/v1/auth/google", (req, res) => {
@@ -475,6 +504,6 @@ app.get("/api/stats/get/:session_email", (require, response) => {
   });
 });
 
-app.listen(3002, () => {
-  console.log("running on port 3002");
+app.listen(8080, () => {
+  console.log("running on port 8080");
 })
