@@ -452,25 +452,18 @@ app.get("/api/advancedqueries/noopur/get", (require, response) => {
 // UserRecipes, FriendRecipes, FavoriteRecipes (same as tables in db)
 // UserRecipeStats (table, but one entry -- email of current user, number of recipes by that user, averge rating for all their recipes)
 // AllRecipeStats (same attributes, but multiple entries, grouped by email (all the emails are either the user or the user's friends or the people that created the user's favorite recipes), number for the corresponding email, average rating for the corresponding email)
-app.get("/api/stats/get/{$req.session.email}", (require, response) => {
-  const session_email = require.params.session_email;
+app.get("/api/stats/get", (require, response) => {
+  const session_email = require.session.email;
   const sqlProcedure = `CALL P(?)`;
 
   db.query(sqlProcedure, session_email, (err, result) => {
     if (err) {
       console.log(err);
     }
+
+    console.log(result);
     response.send(result);
   });
-});
-
-// get current user's email
-app.get("/api/me", (req, res) => {
-  if (req.session.email) {
-    res.send(req.session.email)
-  } else {
-    res.send(false)
-  }
 });
 
 app.listen(3002, () => {
