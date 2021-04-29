@@ -20,7 +20,6 @@ function Recipes() {
 
   const [search_recipe_id, set_search_recipe_id] = useState("");
 
-  
   useEffect(() => {
     Axios.get('http://localhost:3002/api/recipes/get').then((response) => {
       set_recipes_list(response.data)

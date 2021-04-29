@@ -4,16 +4,9 @@ import Axios from 'axios';
 Axios.defaults.withCredentials = true
 
 function Tags() {
-  
   const [tag_description, set_tag_description] = useState('');
-
-
   const [tag_list, set_tag_list] = useState([]);
-
- 
   const [new_tag_description, set_new_tag_description] = useState("");
-
-
   const [search_tag_id, set_search_tagid] = useState("");
 
   useEffect(() => {
@@ -23,8 +16,6 @@ function Tags() {
   }, [])
 
   const submitTag = () => { 
-   
-    
     Axios.post('http://localhost:3002/api/tags/insert', {
       tag_description: tag_description,
     }).then(() => {
@@ -33,10 +24,7 @@ function Tags() {
         set_tag_list(response.data)
       })
     });
-
-
     set_tag_description("")
-
   };
 
   const deleteTag = (tag_id) => {
