@@ -31,6 +31,19 @@ function App() {
           <h2>All the recipes to please you!</h2>
           <h4>Team: Outer Join, but we like to call ourselves databaes</h4>
           <div className="form">
+        <button id="stats_btn" onClick={() => {
+          document.getElementById('users').style.display = 'none';
+          document.getElementById('ingredients').style.display = 'none';
+          document.getElementById('recipes').style.display = 'none';
+          document.getElementById('tags').style.display = 'none';
+          document.getElementById('advanced_queries').style.display = 'none';
+
+          document.getElementById("my_recipes").style.display = "block";
+          document.getElementById("my_favorite_recipes").style.display = "block";
+          document.getElementById("my_friends_recipes").style.display = "block";
+          document.getElementById("my_recipe_stats").style.display = "block";
+          document.getElementById("all_stats").style.display = "block";
+        }}> See Stats</button>
         <h3> Homepage:</h3>
         <button id="users_btn" onClick={() => {
           document.getElementById('users').style.display = 'block';
@@ -38,6 +51,12 @@ function App() {
           document.getElementById('recipes').style.display = 'none';
           document.getElementById('tags').style.display = 'none';
           document.getElementById('advanced_queries').style.display = 'none';
+
+          document.getElementById("my_recipes").style.display = "none";
+          document.getElementById("my_favorite_recipes").style.display = "none";
+          document.getElementById("my_friends_recipes").style.display = "none";
+          document.getElementById("my_recipe_stats").style.display = "none";
+          document.getElementById("all_stats").style.display = "none";
         }}> Users</button>
         <br/>
         <br/>
@@ -47,6 +66,12 @@ function App() {
           document.getElementById('recipes').style.display = 'block';
           document.getElementById('tags').style.display = 'none';
           document.getElementById('advanced_queries').style.display = 'none';
+
+          document.getElementById("my_recipes").style.display = "none";
+          document.getElementById("my_favorite_recipes").style.display = "none";
+          document.getElementById("my_friends_recipes").style.display = "none";
+          document.getElementById("my_recipe_stats").style.display = "none";
+          document.getElementById("all_stats").style.display = "none";
         }}> Recipes</button>
         <br/>
         <br/>
@@ -56,6 +81,12 @@ function App() {
           document.getElementById('recipes').style.display = 'none';
           document.getElementById('tags').style.display = 'none';
           document.getElementById('advanced_queries').style.display = 'none';
+
+          document.getElementById("my_recipes").style.display = "none";
+          document.getElementById("my_favorite_recipes").style.display = "none";
+          document.getElementById("my_friends_recipes").style.display = "none";
+          document.getElementById("my_recipe_stats").style.display = "none";
+          document.getElementById("all_stats").style.display = "none";
         }}> Ingredients</button>
         <br/>
         <br/>
@@ -65,6 +96,12 @@ function App() {
           document.getElementById('recipes').style.display = 'none';
           document.getElementById('tags').style.display = 'block';
           document.getElementById('advanced_queries').style.display = 'none';
+
+          document.getElementById("my_recipes").style.display = "none";
+          document.getElementById("my_favorite_recipes").style.display = "none";
+          document.getElementById("my_friends_recipes").style.display = "none";
+          document.getElementById("my_recipe_stats").style.display = "none";
+          document.getElementById("all_stats").style.display = "none";
         }}> Tags</button>
         <br/>
         <br/>
@@ -74,6 +111,12 @@ function App() {
           document.getElementById('recipes').style.display = 'none';
           document.getElementById('tags').style.display = 'none';
           document.getElementById('advanced_queries').style.display = 'block';
+
+          document.getElementById("my_recipes").style.display = "none";
+          document.getElementById("my_favorite_recipes").style.display = "none";
+          document.getElementById("my_friends_recipes").style.display = "none";
+          document.getElementById("my_recipe_stats").style.display = "none";
+          document.getElementById("all_stats").style.display = "none";
         }}> Advanced Queries</button>
       </div>
         </div>
