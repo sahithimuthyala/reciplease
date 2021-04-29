@@ -1,6 +1,7 @@
 import './App.css';
 import React, {useState, useEffect} from "react";
 import Axios from 'axios';
+import env from "react-dotenv";
 Axios.defaults.withCredentials = true
 
 function Recipes() {
@@ -22,13 +23,13 @@ function Recipes() {
 
   
   useEffect(() => {
-    Axios.get('http://localhost:3002/api/recipes/get').then((response) => {
+    Axios.get(env.BACKEND_DOMAIN + '/api/recipes/get').then((response) => {
       set_recipes_list(response.data)
     })
   }, [])
 
   const submitRecipe = () => { 
-    Axios.post('http://localhost:3002/api/recipes/insert', {
+    Axios.post(env.BACKEND_DOMAIN + '/api/recipes/insert', {
       rating: rating,
       prep_time_minutes: prep_time_minutes,
       serving_size: serving_size,
@@ -36,7 +37,7 @@ function Recipes() {
       recipe_name: recipe_name,
     }).then(() => {
       set_recipes_list([])
-      Axios.get('http://localhost:3002/api/recipes/get').then((response) => {
+      Axios.get(env.BACKEND_DOMAIN + '/api/recipes/get').then((response) => {
         set_recipes_list(response.data)
       })
     });
@@ -49,9 +50,9 @@ function Recipes() {
   };
 
   const deleteRecipe = (recipe_id) => {
-    Axios.delete(`http://localhost:3002/api/recipes/delete/${recipe_id}`).then(() => {
+    Axios.delete(`${env.BACKEND_DOMAIN}/api/recipes/delete/${recipe_id}`).then(() => {
       set_recipes_list([])
-      Axios.get('http://localhost:3002/api/recipes/get').then((response) => {
+      Axios.get(env.BACKEND_DOMAIN + '/api/recipes/get').then((response) => {
         set_recipes_list(response.data)
       })
     });
@@ -60,7 +61,7 @@ function Recipes() {
   const updateRecipe = (recipe_id) => {
     console.log(recipe_id)
     console.log(new_recipe_name)
-    Axios.put(`http://localhost:3002/api/recipes/update`, {
+    Axios.put(`${env.BACKEND_DOMAIN}/api/recipes/update`, {
         recipe_id: recipe_id,
         rating: new_rating,
         prep_time_minutes: new_prep_time_minutes,
@@ -69,7 +70,7 @@ function Recipes() {
         recipe_name: new_recipe_name,
     }).then(() => {
       set_recipes_list([])
-      Axios.get('http://localhost:3002/api/recipes/get').then((response) => {
+      Axios.get(env.BACKEND_DOMAIN + '/api/recipes/get').then((response) => {
         set_recipes_list(response.data)
       })
     });
@@ -81,7 +82,7 @@ function Recipes() {
   };
 
   const searchRecipe = () => {
-    Axios.get(`http://localhost:3002/api/recipes/getSelected/${search_recipe_id}`).then((response) => {
+    Axios.get(`${env.BACKEND_DOMAIN}/api/recipes/getSelected/${search_recipe_id}`).then((response) => {
       set_recipes_list(response.data)
     })
   };

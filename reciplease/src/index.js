@@ -18,7 +18,7 @@ import GoogleLogin from 'react-google-login';
 
 import env from "react-dotenv";
 
-Axios.get('http://localhost:3002/api/v1/auth/google', { withCredentials: true }).then((response) => {
+Axios.get(env.BACKEND_DOMAIN + '/api/v1/auth/google', { withCredentials: true }).then((response) => {
     if (response.data) {
         ReactDOM.render(
             <App />,
@@ -57,7 +57,7 @@ Axios.get('http://localhost:3002/api/v1/auth/google', { withCredentials: true })
     } else {
         const handleLogin = async (googleData) => {
             console.log('google data', googleData)
-            await fetch("http://localhost:3002/api/v1/auth/google", {
+            await fetch(env.BACKEND_DOMAIN + "/api/v1/auth/google", {
                 method: "POST",
                 body: JSON.stringify({
                 token: googleData.tokenId

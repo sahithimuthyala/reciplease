@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 // var cookieParser = require('cookie-parser');
 var session = require('express-session')
+require('dotenv').config()
 
 const { OAuth2Client } = require('google-auth-library')
 const client = new OAuth2Client(process.env.CLIENT_ID)
@@ -22,9 +23,8 @@ var session_middleware = session({secret:'Keep it secret'
 ,saveUninitialized:false})
 
 app.use(session_middleware);
-
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: process.env.FRONTEND_DOMAIN,
   methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
   credentials: true
 }));
@@ -46,8 +46,6 @@ app.get("/api/v1/auth/google", (req, res) => {
 
 app.post("/api/v1/auth/google", (req, res) => {
   const { token }  = req.body
-  console.log('auth post')
-  console.log(req.body)
   client.verifyIdToken({
       idToken: token,
       audience: process.env.CLIENT_ID

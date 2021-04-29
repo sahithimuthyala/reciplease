@@ -1,6 +1,7 @@
 import './App.css';
 import React, {useState, useEffect} from "react";
 import Axios from 'axios';
+import env from "react-dotenv";
 Axios.defaults.withCredentials = true
 
 function AdvQueries() {
@@ -10,16 +11,16 @@ function AdvQueries() {
   const [noopurList, setNoopurList] = useState([]);
 
   useEffect(() => {
-    Axios.get('http://localhost:3002/api/advancedqueries/sahi/get').then((response) => {
+    Axios.get(env.BACKEND_DOMAIN + '/api/advancedqueries/sahi/get').then((response) => {
       setSahiList(response.data)
     });
-    Axios.get('http://localhost:3002/api/advancedqueries/akshit/get').then((response) => {
+    Axios.get(env.BACKEND_DOMAIN + '/api/advancedqueries/akshit/get').then((response) => {
       setAkshitList(response.data)
     });
-    Axios.get('http://localhost:3002/api/advancedqueries/adarsh/get').then((response) => {
+    Axios.get(env.BACKEND_DOMAIN + '/api/advancedqueries/adarsh/get').then((response) => {
       setAdarshList(response.data)
     });
-    Axios.get('http://localhost:3002/api/advancedqueries/noopur/get').then((response) => {
+    Axios.get(env.BACKEND_DOMAIN + '/api/advancedqueries/noopur/get').then((response) => {
       setNoopurList(response.data)
     });
   }, [])

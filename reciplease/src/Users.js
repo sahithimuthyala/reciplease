@@ -1,6 +1,7 @@
 import './App.css';
 import React, {useState, useEffect} from "react";
 import Axios from 'axios';
+import env from "react-dotenv";
 Axios.defaults.withCredentials = true
 
 function Users() {
@@ -16,25 +17,25 @@ function Users() {
 
   // stored procedure example
   // useEffect(() => {
-  //   Axios.get('http://localhost:3002/api/stats/get/lily.lyman@gmail.com').then((response) => {
+  //   Axios.get(env.BACKEND_DOMAIN + '/api/stats/get/lily.lyman@gmail.com').then((response) => {
   //     console.log("procedure", response.data)
   //   })
   // }, [])
   
   useEffect(() => {
-    Axios.get('http://localhost:3002/api/users/get').then((response) => {
+    Axios.get(env.BACKEND_DOMAIN + '/api/users/get').then((response) => {
       setUsersList(response.data)
     })
   }, [])
 
   const submitUser = () => { 
-    Axios.post('http://localhost:3002/api/users/insert', {
+    Axios.post(env.BACKEND_DOMAIN + '/api/users/insert', {
       first_name: first_name,
       last_name: last_name,
       email: email,
     }).then(() => {
       setUsersList([])
-      Axios.get('http://localhost:3002/api/users/get').then((response) => {
+      Axios.get(env.BACKEND_DOMAIN + '/api/users/get').then((response) => {
         setUsersList(response.data)
       })
     });
@@ -44,22 +45,22 @@ function Users() {
   };
 
   const deleteUser = (email) => {
-    Axios.delete(`http://localhost:3002/api/users/delete/${email}`).then(() => {
+    Axios.delete(`${env.BACKEND_DOMAIN}/api/users/delete/${email}`).then(() => {
       setUsersList([])
-      Axios.get('http://localhost:3002/api/users/get').then((response) => {
+      Axios.get(env.BACKEND_DOMAIN + '/api/users/get').then((response) => {
         setUsersList(response.data)
       })
     });
   };
 
   const updateUser = (email) => {
-    Axios.put(`http://localhost:3002/api/users/update`, {
+    Axios.put(`${env.BACKEND_DOMAIN}/api/users/update`, {
       first_name: newfirst_name,
       last_name: newlast_name,
       email: email,
     }).then(() => {
       setUsersList([])
-      Axios.get('http://localhost:3002/api/users/get').then((response) => {
+      Axios.get(env.BACKEND_DOMAIN + '/api/users/get').then((response) => {
         setUsersList(response.data)
       })
     });
@@ -68,7 +69,7 @@ function Users() {
   };
 
   const searchUser = () => {
-    Axios.get(`http://localhost:3002/api/users/getSelected/${searchfirst_name}`).then((response) => {
+    Axios.get(`${env.BACKEND_DOMAIN}/api/users/getSelected/${searchfirst_name}`).then((response) => {
       setUsersList(response.data)
     })
   };

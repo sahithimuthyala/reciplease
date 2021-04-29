@@ -1,6 +1,7 @@
 import './App.css';
 import React, {useState, useEffect} from "react";
 import Axios from 'axios';
+import env from "react-dotenv";
 Axios.defaults.withCredentials = true
 
 function Ingredients() {
@@ -11,18 +12,18 @@ function Ingredients() {
   const [search_ingredient_id, setsearch_ingredient_id] = useState("");
 
   useEffect(() => {
-    Axios.get('http://localhost:3002/api/ingredients/get').then((response) => {
+    Axios.get(env.BACKEND_DOMAIN + '/api/ingredients/get').then((response) => {
       setIngredientsList(response.data)
     })
   }, [])
 
   const submitIngredient = () => { 
-    Axios.post('http://localhost:3002/api/ingredients/insert', {
+    Axios.post(env.BACKEND_DOMAIN + '/api/ingredients/insert', {
       recipe_id: recipe_id,
       ingredient_description: ingredient_description,
     }).then(() => {
       setIngredientsList([])
-      Axios.get('http://localhost:3002/api/ingredients/get').then((response) => {
+      Axios.get(env.BACKEND_DOMAIN + '/api/ingredients/get').then((response) => {
         setIngredientsList(response.data)
       })
     });
@@ -31,21 +32,21 @@ function Ingredients() {
   };
 
   const deleteIngredient = (ingredient_id) => {
-    Axios.delete(`http://localhost:3002/api/ingredients/delete/${ingredient_id}`).then(() => {
+    Axios.delete(`${env.BACKEND_DOMAIN}/api/ingredients/delete/${ingredient_id}`).then(() => {
       setIngredientsList([])
-      Axios.get('http://localhost:3002/api/ingredients/get').then((response) => {
+      Axios.get(env.BACKEND_DOMAIN + '/api/ingredients/get').then((response) => {
         setIngredientsList(response.data)
       })
     });
   };
 
   const updateIngredient = (ingredient_id) => {
-    Axios.put(`http://localhost:3002/api/ingredients/update`, {
+    Axios.put(`${env.BACKEND_DOMAIN}/api/ingredients/update`, {
       ingredient_id: ingredient_id,
       ingredient_description: newingredient_description,
     }).then(() => {
       setIngredientsList([])
-      Axios.get('http://localhost:3002/api/ingredients/get').then((response) => {
+      Axios.get(env.BACKEND_DOMAIN + '/api/ingredients/get').then((response) => {
         setIngredientsList(response.data)
       })
     });
@@ -53,7 +54,7 @@ function Ingredients() {
   };
 
   const searchIngredient = () => {
-    Axios.get(`http://localhost:3002/api/ingredients/getSelected/${search_ingredient_id}`).then((response) => {
+    Axios.get(`${env.BACKEND_DOMAIN}/api/ingredients/getSelected/${search_ingredient_id}`).then((response) => {
       setIngredientsList(response.data)
     })
   };

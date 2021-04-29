@@ -1,6 +1,7 @@
 import './App.css';
 import React, {useState, useEffect} from "react";
 import Axios from 'axios';
+import env from "react-dotenv";
 Axios.defaults.withCredentials = true
 
 function Tags() {
@@ -17,7 +18,7 @@ function Tags() {
   const [search_tag_id, set_search_tagid] = useState("");
 
   useEffect(() => {
-    Axios.get('http://localhost:3002/api/tags/get').then((response) => {
+    Axios.get(env.BACKEND_DOMAIN + '/api/tags/get').then((response) => {
       set_tag_list(response.data)
     })
   }, [])
@@ -25,11 +26,11 @@ function Tags() {
   const submitTag = () => { 
    
     
-    Axios.post('http://localhost:3002/api/tags/insert', {
+    Axios.post(env.BACKEND_DOMAIN + '/api/tags/insert', {
       tag_description: tag_description,
     }).then(() => {
       set_tag_list([])
-      Axios.get('http://localhost:3002/api/tags/get').then((response) => {
+      Axios.get(env.BACKEND_DOMAIN + '/api/tags/get').then((response) => {
         set_tag_list(response.data)
       })
     });
@@ -40,21 +41,21 @@ function Tags() {
   };
 
   const deleteTag = (tag_id) => {
-    Axios.delete(`http://localhost:3002/api/tags/delete/${tag_id}`).then(() => {
+    Axios.delete(`${env.BACKEND_DOMAIN}/api/tags/delete/${tag_id}`).then(() => {
       set_tag_list([])
-      Axios.get('http://localhost:3002/api/tags/get').then((response) => {
+      Axios.get(env.BACKEND_DOMAIN + '/api/tags/get').then((response) => {
         set_tag_list(response.data)
       })
     });
   };
 
   const updateTag = (tag_id) => {
-    Axios.put(`http://localhost:3002/api/tags/update`, {
+    Axios.put(`${env.BACKEND_DOMAIN}/api/tags/update`, {
         tag_id: tag_id,
         tag_description: new_tag_description,
     }).then(() => {
       set_tag_list([])
-      Axios.get('http://localhost:3002/api/tags/get').then((response) => {
+      Axios.get(env.BACKEND_DOMAIN + '/api/tags/get').then((response) => {
         set_tag_list(response.data)
       })
     });
@@ -64,7 +65,7 @@ function Tags() {
   };
 
   const searchTag = () => {
-    Axios.get(`http://localhost:3002/api/tags/getSelected/${search_tag_id}`).then((response) => {
+    Axios.get(`${env.BACKEND_DOMAIN}/api/tags/getSelected/${search_tag_id}`).then((response) => {
       set_tag_list(response.data)
     })
   };

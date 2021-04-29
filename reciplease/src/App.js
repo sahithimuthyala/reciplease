@@ -1,11 +1,12 @@
 import Axios from 'axios';
+import env from "react-dotenv";
 
 import './App.css';
 Axios.defaults.withCredentials = true
 
 function App() {
   function logout() {
-    Axios.delete(`http://localhost:3002/api/v1/auth/google`).then(() => {
+    Axios.delete(`${env.BACKEND_DOMAIN}/api/v1/auth/google`).then(() => {
       window.location.reload(true);
     })
   }
