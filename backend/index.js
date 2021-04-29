@@ -48,6 +48,7 @@ app.post("/api/v1/auth/google", (req, res) => {
   const { token }  = req.body
   console.log('auth post')
   console.log(req.body)
+
   client.verifyIdToken({
       idToken: token,
       audience: process.env.CLIENT_ID
@@ -114,6 +115,7 @@ app.post("/api/users/insert", (require, response) => {
   const first_name = require.body.first_name;
   const last_name = require.body.last_name;
   const email = require.body.email;
+
   const sqlInsert = "INSERT INTO `users` (`first_name`, `last_name`, `email`) VALUES (?,?,?)";
   db.query(sqlInsert, [first_name, last_name, email], (err, result) => {
       if (err)
@@ -166,8 +168,6 @@ app.get("/api/recipes/getSelected/:recipe_id", (require, response) => {
   });
 });
 
-// might need to add other attributes
-
 app.post("/api/recipes/insert", (require, response) => {
   const rating = require.body.rating;
   const prep_time_minutes = require.body.prep_time_minutes;
@@ -175,7 +175,6 @@ app.post("/api/recipes/insert", (require, response) => {
   const recipe_description = require.body.recipe_description;
   const recipe_name = require.body.recipe_name;
 
-  
   db.query('SELECT `user_id` FROM `users` WHERE `email` = \'' + require.session.email + '\'', (err, result) => {
     if (err)
       console.log(err)
@@ -188,9 +187,6 @@ app.post("/api/recipes/insert", (require, response) => {
     })
   })
 });
-
-
-// figure out based on what are we going to delete
 
 app.delete("/api/recipes/delete/:recipe_id", (require, response) => {
   const recipe_id = require.params.recipe_id;
@@ -211,6 +207,7 @@ app.put("/api/recipes/update", (require, response) => {
   const recipe_description = require.body.recipe_description;
   const recipe_name = require.body.recipe_name;
   console.log(require.session)
+
   const sqlUpdate = "UPDATE `recipes` SET `rating` = ?, `prep_time_minutes` = ?, `serving_size` = ?, `recipe_description` = ?, `recipe_name` = ? WHERE `recipe_id`= ?";
   db.query(sqlUpdate, [rating, prep_time_minutes, serving_size, recipe_description, recipe_name, recipe_id], (err, result) => {
       if (err) 
@@ -219,9 +216,7 @@ app.put("/api/recipes/update", (require, response) => {
   })
 });
 
-
 // ingredients endpoints
-
 app.get("/api/ingredients/get", (require, response) => {
   const sqlSelect = "SELECT ingredient_id, ingredient_description, recipe_name FROM ingredients NATURAL JOIN recipes LIMIT 15";
   db.query(sqlSelect, (err, result) => {
@@ -241,8 +236,6 @@ app.get("/api/ingredients/getSelected/:ingredient_id", (require, response) => {
   });
 });
 
-// might need to add other attributes
-
 app.post("/api/ingredients/insert", (require, response) => {
   const recipe_id = require.body.recipe_id;
   const ingredient_description = require.body.ingredient_description;
@@ -254,9 +247,6 @@ app.post("/api/ingredients/insert", (require, response) => {
       response.sendStatus(204)
   })
 });
-
-
-// figure out based on what are we going to delete
 
 app.delete("/api/ingredients/delete/:ingredient_id", (require, response) => {
   const ingredient_id = require.params.ingredient_id;
@@ -302,9 +292,7 @@ app.get("/api/tags/getSelected/:tag_id", (require, response) => {
 });
 
 app.post("/api/tags/insert", (require, response) => {
-
   const tag_description = require.body.tag_description;
-
 
   const sqlInsert = "INSERT INTO `tags` (`recipe_id`, `tag_description`) VALUES (13, ?)";
   db.query(sqlInsert, [tag_description], (err, result) => {
@@ -312,9 +300,6 @@ app.post("/api/tags/insert", (require, response) => {
         console.log(err);
   })
 });
-
-
-// figure out based on what are we going to delete
 
 app.delete("/api/tags/delete/:tag_id", (require, response) => {
   const tag_id = require.params.tag_id;
@@ -330,7 +315,6 @@ app.put("/api/tags/update", (require, response) => {
   const tag_id = require.body.tag_id;
   const tag_description = require.body.tag_description;
 
-
   const sqlUpdate = "UPDATE `tags` SET `tag_description` = ? WHERE `tag_id`= ?";
   db.query(sqlUpdate, [tag_description, tag_id], (err, result) => {
       if (err) 
@@ -339,7 +323,6 @@ app.put("/api/tags/update", (require, response) => {
 });
 
 // advanced query endpoints
-
 /*
 Sahi
 
@@ -466,15 +449,28 @@ app.get("/api/advancedqueries/noopur/get", (require, response) => {
 
 // returns user stats based on email
 // output: [UserRecipes, FriendRecipes, FavoriteRecipes, UserRecipeStats, AllRecipeStats]
-app.get("/api/stats/get/:session_email", (require, response) => {
+// UserRecipes, FriendRecipes, FavoriteRecipes (same as tables in db)
+// UserRecipeStats (table, but one entry -- email of current user, number of recipes by that user, averge rating for all their recipes)
+// AllRecipeStats (same attributes, but multiple entries, grouped by email (all the emails are either the user or the user's friends or the people that created the user's favorite recipes), number for the corresponding email, average rating for the corresponding email)
+app.get("/api/stats/get/{$req.session.email}", (require, response) => {
   const session_email = require.params.session_email;
   const sqlProcedure = `CALL P(?)`;
+
   db.query(sqlProcedure, session_email, (err, result) => {
     if (err) {
       console.log(err);
     }
     response.send(result);
   });
+});
+
+// get current user's email
+app.get("/api/me", (req, res) => {
+  if (req.session.email) {
+    res.send(req.session.email)
+  } else {
+    res.send(false)
+  }
 });
 
 app.listen(3002, () => {
