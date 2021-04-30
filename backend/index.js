@@ -47,8 +47,6 @@ app.get("/api/v1/auth/google", (req, res) => {
 
 app.post("/api/v1/auth/google", (req, res) => {
   const { token }  = req.body
-  console.log('auth post')
-  console.log(req.body)
 
   client.verifyIdToken({
       idToken: token,
@@ -125,6 +123,29 @@ app.post("/api/users/insert", (require, response) => {
   })
 });
 
+app.post("/api/users/friend", (require, response) => {
+  const email = require.body.email;
+  db.query('SELECT `user_id` FROM `users` WHERE `email` = \'' + require.session.email + '\'', (err, result) => {
+    if (err)
+      console.log(err)
+    const user_id1 = result[0].user_id
+    db.query('SELECT `user_id` FROM `users` WHERE `email` = \'' + email + '\'', (err, res) => {
+      if (err)
+        console.log(err)
+      const user_id2 = res[0].user_id
+
+      const sqlInsert = "INSERT INTO `friends_with` (`user_id1`, `user_id2`) VALUES (?,?)";
+      db.query(sqlInsert, [user_id1, user_id2], (err, finres) => {
+          if (err) {
+            console.log(err);
+            response.sendStatus(204)
+          }
+          response.sendStatus(204)
+      })
+    })
+  })
+});
+
 app.delete("/api/users/delete/:email", (require, response) => {
   const email = require.params.email;
 
@@ -175,6 +196,8 @@ app.post("/api/recipes/insert", (require, response) => {
   const serving_size = require.body.serving_size;
   const recipe_description = require.body.recipe_description;
   const recipe_name = require.body.recipe_name;
+  const ingredients = require.body.ingredients.split(',')
+  const tags = require.body.tags.split(',')
 
   db.query('SELECT `user_id` FROM `users` WHERE `email` = \'' + require.session.email + '\'', (err, result) => {
     if (err)
@@ -184,9 +207,36 @@ app.post("/api/recipes/insert", (require, response) => {
     db.query(sqlInsert, [user_id, rating, prep_time_minutes, serving_size, recipe_description, recipe_name], (err, res) => {
         if (err)
           console.log(err);
-        
+        ingredients.forEach(function(ingredient) {
+          const sqlInsert = "INSERT INTO `ingredients` (`recipe_id`, `ingredient_description`) VALUES (?,?)";
+          db.query(sqlInsert, [res.insertId, ingredient], (err, result) => {
+              if (err)
+                console.log(err);
+          })
+        });
+        tags.forEach(function(tag) {
+          const sqlInsert = "INSERT INTO `tags` (`recipe_id`, `tag_description`) VALUES (?, ?)";
+          db.query(sqlInsert, [res.insertId, tag], (err, result) => {
+              if (err)
+                console.log(err);
+          })
+        });
         //console.log("187 " + res.insertId)
         response.sendStatus(204)
+    })
+  })
+});
+
+app.post("/api/recipes/favorite", (require, response) => {
+  const recipe_id = require.body.recipe_id;
+  db.query('SELECT `user_id` FROM `users` WHERE `email` = \'' + require.session.email + '\'', (err, result) => {
+    if (err)
+      console.log(err)
+    const user_id = result[0].user_id
+    db.query('INSERT INTO `favorites` (`user_id`, `recipe_id`) VALUES (?, ?)', [user_id, recipe_id] ,(err, result) => {
+      if (err)
+        console.log(err)
+      response.sendStatus(204)
     })
   })
 });

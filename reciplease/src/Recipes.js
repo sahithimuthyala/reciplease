@@ -9,6 +9,8 @@ function Recipes() {
   const [serving_size, set_serving_size] = useState('');
   const [recipe_description, set_recipe_description] = useState('');
   const [recipe_name, set_recipe_name] = useState('');
+  const [ingredients, set_ingredients] = useState('');
+  const [tags, set_tags] = useState('');
 
   const [recipe_list, set_recipes_list] = useState([]);
 
@@ -33,6 +35,8 @@ function Recipes() {
       serving_size: serving_size,
       recipe_description: recipe_description,
       recipe_name: recipe_name,
+      ingredients: ingredients,
+      tags: tags
     }).then(() => {
       set_recipes_list([])
       Axios.get('http://localhost:3002/api/recipes/get').then((response) => {
@@ -85,6 +89,14 @@ function Recipes() {
     })
   };
 
+  const favorite = (recipe_id) => { 
+    Axios.post('http://localhost:3002/api/recipes/favorite', {
+      recipe_id: recipe_id
+    }).then(() => {
+      window.location.reload(true);
+    });
+  };
+
   return (
     <div className="Recipes">
       <h1> Recipes</h1>
@@ -111,6 +123,14 @@ function Recipes() {
         <input type="number" name="rating" onChange={(e) => {
           set_rating(e.target.value)
         }}/>
+        <label> Ingredients (comma separated):</label>
+        <input type="text" name="ingredients" onChange={(e) => {
+          set_ingredients(e.target.value)
+        }}/>
+        <label> Tags (comma separated):</label>
+        <input type="text" name="tags" onChange={(e) => {
+          set_tags(e.target.value)
+        }}/>
         
         <button onClick={submitRecipe}> Submit</button>
 
@@ -130,6 +150,10 @@ function Recipes() {
               <p> Serving Size: {val.serving_size}</p>
               <p> Recipe Description: {val.recipe_description}</p>
               <p> Rating: {val.rating}</p>
+              <button onClick={() => {
+                favorite(val.recipe_id)
+              }}> Favorite</button>
+              <br/>
               <button onClick={() => { deleteRecipe(val.recipe_id) }}> Delete</button>
               <input type="text" id="update_recipe_name" onChange={(e) => {
                 set_new_recipe_name(e.target.value)

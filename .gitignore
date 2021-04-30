@@ -12,6 +12,9 @@
 
 # production
 /build
+*build/
+*app.yaml
+*reciplease-1-933721782380.json
 
 # misc
 .DS_Store

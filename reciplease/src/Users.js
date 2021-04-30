@@ -7,6 +7,7 @@ function Users() {
   const [first_name, setfirst_name] = useState('');
   const [last_name, setlast_name] = useState('');
   const [email, setEmail] = useState('');
+  const [new_friend, set_new_friend] = useState('');
   const [userList, setUsersList] = useState([]);
 
   const [newfirst_name, setNewfirst_name] = useState("");
@@ -73,6 +74,15 @@ function Users() {
     })
   };
 
+  const makeFriend = (email) => {
+    Axios.post('http://localhost:3002/api/users/friend', {
+      email: email
+    }).then(() => {
+      set_new_friend('')
+      window.location.reload(true);
+    });
+  }
+
   return (
     <div className="Users">
       <h1> Users</h1>
@@ -102,6 +112,15 @@ function Users() {
         <button onClick={() => {
             searchUser()
         }}> Populate</button>
+
+        <h4>Make Friends</h4>
+        <input name="new_friend_email" onChange={(e) => {
+            set_new_friend(e.target.value)
+        }}></input>
+
+        <button onClick={() => {
+            makeFriend(new_friend)
+        }}> Add Friend</button>
         {userList.map((val) => {
           return (
             <div className = "card">
